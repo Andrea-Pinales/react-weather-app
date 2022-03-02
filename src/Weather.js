@@ -3,22 +3,22 @@ import axios from "axios";
 import "./Weather.css";
 
 export default function Weather() {
-  const [ready, setReady] = useState(false);
-  const [weatherData, setWeatherData] = useState({});
+  const [weatherData, setWeatherData] = useState({ ready: false });
   function handleResponse(response) {
     console.log(response.data);
     setWeatherData({
-      city: response.data.main,
+      ready: true,
+      city: response.data.name,
+      date: "Thursday | March, 1 | 10:54",
       temperature: response.data.main.temp,
-      iconUrl: "./images/01d_241.png",
+      icon: "./images/01d_241.png",
       description: response.data.weather[0].description,
       high: response.data.main.temp_max,
       low: response.data.main.temp_min,
     });
-    setReady(true);
   }
 
-  if (ready) {
+  if (weatherData.ready) {
     return (
       <div className="Weather">
         <form>
@@ -40,7 +40,7 @@ export default function Weather() {
         <div className="container">
           <div className="row city-date">
             <h2>{weatherData.city}</h2>
-            <h3>Thursday | March, 1 | 10:54</h3>
+            <h3>{weatherData.date}</h3>
           </div>
 
           <button className="unit">C</button>
@@ -50,7 +50,7 @@ export default function Weather() {
             <div class="col">
               <h1>{Math.round(weatherData.temperature)}°</h1>
               <img
-                src={weatherData.iconUrl}
+                src={weatherData.icon}
                 alt={weatherData.description}
                 className="Images"
               />
@@ -60,11 +60,11 @@ export default function Weather() {
 
           <div class="row justify-content-center high-low">
             <div class="col-2">
-              <h3>H: {weatherData.high}°</h3>
+              <h3>H: {Math.round(weatherData.high)}°</h3>
             </div>
 
             <div class="col-2">
-              <h3>L: {weatherData.low}°</h3>
+              <h3>L: {Math.round(weatherData.low)}°</h3>
             </div>
           </div>
         </div>

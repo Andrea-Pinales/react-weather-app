@@ -1,52 +1,81 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import "./Weather.css";
 
 export default function Weather() {
-  return (
-    <div className="Weather">
-      <form>
-        <div className="row">
-          <div className="col-9">
-            <input
-              type="search"
-              placeholder="Enter your city"
-              className="form-control"
-              autoFocus="on"
-            />
+  const [ready, setReady] = useState(false);
+  const [weatherData, setWeatherData] = useState({});
+  function handleResponse(response) {
+    console.log(response.data);
+    setWeatherData({
+      city: response.data.main,
+      temperature: response.data.main.temp,
+      iconUrl: "./images/01d_241.png",
+      description: response.data.weather[0].description,
+      high: response.data.main.temp_max,
+      low: response.data.main.temp_min,
+    });
+    setReady(true);
+  }
+
+  if (ready) {
+    return (
+      <div className="Weather">
+        <form>
+          <div className="row">
+            <div className="col-9">
+              <input
+                type="search"
+                placeholder="Enter your city"
+                className="form-control"
+                autoFocus="on"
+              />
+            </div>
+            <div className="col-3">
+              <input type="submit" value="Search" className="button" />
+            </div>
           </div>
-          <div className="col-3">
-            <input type="submit" value="Search" className="button" />
-          </div>
-        </div>
-      </form>
+        </form>
 
-      <div className="container">
-        <div className="row city-date">
-          <h2>Los Angeles</h2>
-          <h3>Thursday | March, 1 | 10:54</h3>
-        </div>
-
-        <button className="unit">C</button>
-        <button className="unit">F</button>
-
-        <div class="row current-weather">
-          <div class="col">
-            <h1>20°</h1>
-            <img src="./images/01d_241.png" alt="sunny" className="Images" />
-          </div>
-          <span className="text-capitalize">sunny</span>
-        </div>
-
-        <div class="row justify-content-center high-low">
-          <div class="col-2">
-            <h3>H: 20°</h3>
+        <div className="container">
+          <div className="row city-date">
+            <h2>{weatherData.city}</h2>
+            <h3>Thursday | March, 1 | 10:54</h3>
           </div>
 
-          <div class="col-2">
-            <h3>L: 20°</h3>
+          <button className="unit">C</button>
+          <button className="unit">F</button>
+
+          <div class="row current-weather">
+            <div class="col">
+              <h1>{Math.round(weatherData.temperature)}°</h1>
+              <img
+                src={weatherData.iconUrl}
+                alt={weatherData.description}
+                className="Images"
+              />
+            </div>
+            <span className="text-capitalize">{weatherData.description}</span>
+          </div>
+
+          <div class="row justify-content-center high-low">
+            <div class="col-2">
+              <h3>H: {weatherData.high}°</h3>
+            </div>
+
+            <div class="col-2">
+              <h3>L: {weatherData.low}°</h3>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    const apiKey = "1d016b2c6f287c8ba67f95b2a66be332";
+    let city = "San Diego";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(handleResponse);
+
+    return "Loading...";
+  }
 }

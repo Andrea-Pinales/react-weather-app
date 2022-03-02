@@ -22,5 +22,13 @@ export default function WeatherIcon(props) {
     "50n": "mist",
   };
 
-  return <img src={codeMapping[props]} alt={props.alt}></img>;
+  return (
+    <div>
+      <img
+        src={codeMapping[props.code]}
+        alt={props.alt}
+        className="weatherIcon"
+      />
+    </div>
+  );
 }

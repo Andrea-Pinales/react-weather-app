@@ -14,8 +14,8 @@ export default function WeatherInfo(props) {
         <button className="unit">C</button>
         <button className="unit">F</button>
 
-        <div class="row current-weather">
-          <div class="col">
+        <div className="row current-weather">
+          <div className="col">
             <h1>{Math.round(props.data.temperature)}°</h1>
             <WeatherIcon code={props.data.icon} alt={props.data.description} />
           </div>

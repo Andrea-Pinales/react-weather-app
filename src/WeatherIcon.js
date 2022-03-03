@@ -1,4 +1,5 @@
 import React from "react";
+import "./WeatherIcon.css";
 
 export default function WeatherIcon(props) {
   const codeMapping = {
@@ -23,11 +24,11 @@ export default function WeatherIcon(props) {
   };
 
   return (
-    <div>
+    <div className="WeatherIcon">
       <img
-        src={codeMapping[props.code]}
+        src={`${process.env.PUBLIC_URL}/images/${props.code}_241.png`}
         alt={props.alt}
-        className="weatherIcon"
+        className="WeatherIcon"
       />
     </div>
   );

@@ -1,5 +1,6 @@
 .WeatherIcon .WeatherIcon {
   width: 200px;
+  margin: 0 auto;
   margin-top: -10px;
-  margin-bottom: -21px;
+  margin-bottom: -20px;
 }

@@ -19,12 +19,12 @@ export default function WeatherInfo(props) {
           <span className="text-capitalize">{props.data.description}</span>
         </div>
 
-        <div class="row justify-content-center high-low">
-          <div class="col-2">
+        <div className="row justify-content-center high-low">
+          <div className="col-2">
             <h3>H: {Math.round(props.data.high)}°</h3>
           </div>
 
-          <div class="col-2">
+          <div className="col-2">
             <h3>L: {Math.round(props.data.low)}°</h3>
           </div>
         </div>
